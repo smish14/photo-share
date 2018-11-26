@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { GraphQLScalarType } = require ('graphql');
 
 const typeDefs = `
 
@@ -9,6 +10,8 @@ const typeDefs = `
       LANDSCAPE
       GRAPHIC
     }
+
+    scalar DateTime
     
     input PostPhotoInput {
       name: String!
@@ -30,13 +33,14 @@ const typeDefs = `
       url: String!
       description: String
       category: PhotoCategory!
+      created: DateTime!
       postedBy: User!
       taggedUsers: [User!]!
     }
 
     type Query {
         totalPhotos: Int!
-        allPhotos: [Photo!]!
+        allPhotos : [Photo!]!
     }
 
     type Mutation {
@@ -57,20 +61,26 @@ var photos = [
     "name": "Dropping the Heart Chute",
     "description": "The heart chute is one of my favorite chutes",
     "category": "ACTION",
-    "githubUser": "gPlake"
+    "created": "3-28-1977",
+    "githubUser": "gPlake",
+    
+
   },
   {
     "id": "2",
     "name": "Enjoying the sunshine",
     "category": "SELFIE",
-    "githubUser": "sSchmidt"
+    "created": "1-2-1985",
+    "githubUser": "sSchmidt",
+    
   },
   {
     id: "3",
     "name": "Gunbarrel 25",
     "description": "25 laps on gunbarrel today",
     "category": "LANDSCAPE",
-    "githubUser": "sSchmidt"
+    "created": "2018-04-15T19:09:57.308Z",
+    "githubUser": "sSchmidt",
   }
 ]
 
@@ -91,7 +101,8 @@ const resolvers = {
     postPhoto(parent,args){
       var newPhoto = {
         id: _id++,
-      ...args.input
+      ...args.input,
+      created: new Date()
       }
       photos.push(newPhoto)
       return newPhoto
@@ -130,8 +141,18 @@ const resolvers = {
 
       // Converts array of photoIDs into an array of photo objects
       .map(photoID => photos.find(p => p.id === photoID)) 
-    }
+    },
+
+  DateTime: new GraphQLScalarType ({
+    name: 'DateTime',
+    description: 'A valid date and time',
+    parseValue: value => new Date(value),
+    serialize: value => new Date(value).toISOString(),
+    parseLiteral: ast => ast.value
+  })
 }
+
+console.log(photos[1].created);
 
 // 2. Create a new instance of the server.
 // 3. Send it an object with typeDefs (the schema) and resolvers
