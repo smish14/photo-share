@@ -1,0 +1,28 @@
+{
+  "name": "photo-share",
+  "version": "1.0.0",
+  "description": "a photo sharing app in graphql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -e js,json,graphql",
+    "devserver": "./node_modules/nodemon/bin/nodemon.js index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smish14/photo-share.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smish14/photo-share/issues"
+  },
+  "homepage": "https://github.com/smish14/photo-share#readme",
+  "dependencies": {
+    "apollo-server": "^2.2.2",
+    "graphql": "^14.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  }
+}
