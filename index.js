@@ -140,6 +140,7 @@ const server = new ApolloServer({
     resolvers
   })
   
+  console.log('Shubham')
   
   // 4. Call listen on the server to launch the web server
   server
