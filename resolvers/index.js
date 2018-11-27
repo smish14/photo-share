@@ -1,3 +1,3 @@
-exports.mutation = require("./mutation.js");
-exports.query = require("./query.js");
-exports.type = require("./type.js");
+exports.mutation = require('./mutation.js')
+exports.query = require('./query.js')
+exports.type = require('./type.js')
