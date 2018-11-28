@@ -20,9 +20,12 @@
   "homepage": "https://github.com/smish14/photo-share#readme",
   "dependencies": {
     "apollo-server-express": "^2.2.3",
+    "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "graphql": "^14.0.2",
-    "graphql-playground-middleware-express": "^1.7.8"
+    "graphql-playground-middleware-express": "^1.7.8",
+    "mongo": "^0.1.0",
+    "mongodb": "^3.1.10"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"

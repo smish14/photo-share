@@ -34,11 +34,19 @@
       taggedUsers: [User!]!
     }
 
+    type AuthPayload {
+      token: String!
+      user: User!
+      }
+
     type Query {
         totalPhotos: Int!
         allPhotos : [Photo!]!
+        totalUsers: Int!
+        allUsers : [User!]!
     }
 
     type Mutation {
-      postPhoto(input: PostPhotoInput): Photo!  
+      postPhoto(input: PostPhotoInput): Photo!
+      githubAuth(code: String!): AuthPayload!
     }  
