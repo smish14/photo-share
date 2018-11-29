@@ -4,14 +4,23 @@ const fetch = require('node-fetch')
 const { ObjectID } = require('mongodb')
 
 module.exports = {
-  postPhoto(parent,args){
-      var newPhoto = {
-        id: _id++,
+  async postPhoto(parent,args,{ db, currentUser }){
+
+    if(!currentUser){
+      throw new Error('only authorized users can post photo')
+    }
+
+    const newPhoto = {
       ...args.input,
+      userID: currentUser.githubLogin,
       created: new Date()
       }
-      photos.push(newPhoto)
+      
+      const { insertedIds } = await db.collection('photos').insert(newPhoto)
+      newPhoto.id = insertedIds[0]
+
       return newPhoto
+
     },
     
     async githubAuth(parent, { code }, { db }) {

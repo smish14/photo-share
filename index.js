@@ -17,7 +17,15 @@ async function start () {
   //add dB connection to the context object and start our server.
   const context = { db }
   
-  const server = new ApolloServer({ typeDefs, resolvers, context })
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: async ({ req }) => {
+      const githubToken = req.headers.authorization
+      const currentUser = await db.collection('users').findOne({ githubToken })
+      return { db, currentUser }
+    }
+  })
   
   server.applyMiddleware({app})
 
