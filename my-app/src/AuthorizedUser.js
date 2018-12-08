@@ -1,4 +1,4 @@
-import React, {Component} from React
+import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { Mutation, Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
@@ -51,7 +51,7 @@ class AuthroizedUser extends Component {
     }
 
     requestCode() {
-        var clientID = a44b7c56dbeeab93bab5
+        var clientID = "a44b7c56dbeeab93bab5"
         window.location =
          `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user`
     }
@@ -76,4 +76,4 @@ class AuthroizedUser extends Component {
     }
 }
 
-export default withRouter(AuthorizedUser)
+export default withRouter(AuthroizedUser)

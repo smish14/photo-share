@@ -18,6 +18,7 @@ export const ROOT_QUERY = gql`
         avatar
     }
 `
+
 const App = () => 
 <BrowserRouter>
 <div>
