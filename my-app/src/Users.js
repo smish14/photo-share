@@ -13,13 +13,23 @@ const ADD_FAKE_USERS_MUTATION = gql`
     }
 `
 
-const Users = () =>
-    <Query query={ROOT_QUERY}>
+const updateUsercache = (cache,{data:{addFakeUsers}}) => {
+    let data = cache.readQuery({query: ROOT_QUERY})
+    data.totalUsers += addFakeUsers.length
+    data.allUsers = [
+        ...data.allUsers,
+        ...addFakeUsers
+    ]
+    cache.writeQuery({query: ROOT_QUERY,data})
+}
+
+const Users = () => 
+    <Query query={ROOT_QUERY} fetchPolicy="cache-and-network">
         {({ data, loading, refetch }) => loading ?
             <p>loading users...</p> :
-            <UserList count={data.totalUsers}
-                users={data.allUsers}
-                refetchUsers={refetch} />
+            <UserList count={data.totalUsers} 
+                users={data.allUsers} 
+                refetch={refetch} />
         }
     </Query>
 
@@ -27,10 +37,10 @@ const Users = () =>
 const UserList = ({ count, users, refetch }) =>
     <div>
         <p>{count} Users</p>
-        <button onClick={() => refetch()}>Refetch Users</button>
+        <button onClick={() => refetch()}>Refetch</button>
         <Mutation mutation={ADD_FAKE_USERS_MUTATION} 
         variables={{ count: 1 }}
-        refetchQueries={[{ query: ROOT_QUERY }]}>
+        update={updateUsercache}>
             {addFakeUsers =>
                 <button onClick={addFakeUsers}>Add Fake Users</button>
             }
